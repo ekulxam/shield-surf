@@ -10,13 +10,13 @@ import java.util.Set;
 
 import static survivalblock.shield_surf.common.ShieldSurf.FABRIC_SHIELD_LIB_ID;
 
-public class ShieldSurfMixinPlugin implements IMixinConfigPlugin {
+public class ShieldSurfMixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {
         ShieldSurf.resetShouldDoConfig();
         if (!ShieldSurf.resetHasFabricShieldLib()) {
-            ShieldSurf.LOGGER.warn("No mods with mod id \"" + FABRIC_SHIELD_LIB_ID + "\" have been found. Mixins for FabricShieldLib will not be loaded.");
+            ShieldSurf.LOGGER.debug("No mods with mod id \"" + FABRIC_SHIELD_LIB_ID + "\" have been found. Mixins for FabricShieldLib will not be loaded.");
         }
     }
 
@@ -30,7 +30,7 @@ public class ShieldSurfMixinPlugin implements IMixinConfigPlugin {
         if (targetClassName.contains(FABRIC_SHIELD_LIB_ID)) {
             return ShieldSurf.hasFabricShieldLib;
         }
-        if (targetClassName.contains("config")) {
+        if (targetClassName.contains("config") && mixinClassName.contains("config")) {
             return ShieldSurf.shouldDoConfig;
         }
         return true;

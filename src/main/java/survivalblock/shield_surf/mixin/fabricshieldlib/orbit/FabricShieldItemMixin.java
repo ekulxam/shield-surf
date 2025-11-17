@@ -1,5 +1,6 @@
 package survivalblock.shield_surf.mixin.fabricshieldlib.orbit;
 
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import survivalblock.shield_surf.common.util.ShieldSurfUtil;
 
-@Mixin(FabricShieldItem.class)
+@Mixin({FabricShieldItem.class, FabricBannerShieldItem.class})
 public abstract class FabricShieldItemMixin extends Item {
 
     public FabricShieldItemMixin(Settings settings) {

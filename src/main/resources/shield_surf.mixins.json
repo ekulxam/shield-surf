@@ -2,7 +2,7 @@
   "required": true,
   "package": "survivalblock.shield_surf.mixin",
   "compatibilityLevel": "JAVA_17",
-  "plugin": "survivalblock.shield_surf.common.compat.ShieldSurfMixinPlugin",
+  "plugin": "survivalblock.shield_surf.common.compat.ShieldSurfMixinConfigPlugin",
   "mixins": [
     "fabricshieldlib.expulsion.FabricBannerShieldItemMixin",
     "fabricshieldlib.expulsion.FabricShieldItemMixin",

@@ -15,6 +15,7 @@ public class BuiltinModelItemRendererMixin implements RenderHandleSometimesAcces
 
     @Unique
     private boolean shouldRenderShieldHandle = true;
+
     @Override
     public void shield_surf$setShouldRenderShieldHandle(boolean shouldRender) {
         this.shouldRenderShieldHandle = shouldRender;

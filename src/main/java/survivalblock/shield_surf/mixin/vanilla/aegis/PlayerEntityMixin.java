@@ -1,13 +1,13 @@
 package survivalblock.shield_surf.mixin.vanilla.aegis;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import survivalblock.shield_surf.common.util.ShieldSurfUtil;
 
 @Mixin(PlayerEntity.class)
@@ -17,15 +17,13 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         super(entityType, world);
     }
 
-    @Inject(method = "damageShield", at = @At(value = "HEAD"))
-    private void setActiveItemStackToAegisShield(float amount, CallbackInfo ci){
+    @WrapMethod(method = "damageShield")
+    private void setActiveItemStackToAegisShield(float amount, Operation<Void> original){
+        ItemStack previousActiveStack = this.activeItemStack;
         if (!ShieldSurfUtil.isAShield(this.activeItemStack)) {
             this.activeItemStack = ShieldSurfUtil.getFirstAegisStack(this, true);
         }
-    }
-
-    @Inject(method = "damageShield", at = @At(value = "TAIL"))
-    private void clearActiveItemStack(float amount, CallbackInfo ci){
-        this.clearActiveItem();
+        original.call(amount);
+        this.activeItemStack = previousActiveStack;
     }
 }
