@@ -69,7 +69,7 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
         setInputs();
         if (rider.isSprinting()) rider.setSprinting(false);
         this.getShieldStackComponent().setShieldStack(stack.copy());
-        this.setPos(rider.getX(), rider.getY(), rider.getZ());
+        this.setPosition(rider.getX(), rider.getY(), rider.getZ());
         this.lastLocation = BoatEntity.Location.IN_AIR;
         this.location = BoatEntity.Location.IN_WATER;
         this.setYaw(rider.getYaw());
