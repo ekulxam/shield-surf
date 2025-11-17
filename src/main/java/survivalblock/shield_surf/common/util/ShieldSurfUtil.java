@@ -8,6 +8,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.ServerTask;
+import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
@@ -60,14 +64,24 @@ public class ShieldSurfUtil {
         return !(other instanceof ShieldSurfingEnchantment) || other == original;
     }
 
-    public static void rideTheLightning(World world, PlayerEntity user, Item item, ItemStack stack) {
-        if(!world.isClient() && EnchantmentHelper.getLevel(ShieldSurfEnchantments.SHIELD_SURF, stack) > 0 && !user.isSneaking()){
-            user.incrementStat(Stats.USED.getOrCreateStat(item));
-            ShieldboardEntity shieldboard = new ShieldboardEntity(world, user, stack);
-            world.spawnEntity(shieldboard);
-            user.getInventory().removeOne(stack);
-            user.startRiding(shieldboard, true);
+    public static boolean rideTheLightning(World world, PlayerEntity user, Item item, ItemStack stack) {
+        if (world.isClient()) {
+            return false;
         }
+        if (user.isSneaking()) {
+            return false;
+        }
+        if (EnchantmentHelper.getLevel(ShieldSurfEnchantments.SHIELD_SURF, stack) <= 0) {
+            return false;
+        }
+        user.incrementStat(Stats.USED.getOrCreateStat(item));
+        ShieldboardEntity shieldboard = new ShieldboardEntity(world, user, stack);
+        world.spawnEntity(shieldboard);
+        user.refreshPositionAfterTeleport(user.getPos());
+        user.getInventory().removeOne(stack);
+        user.startRiding(shieldboard, true);
+        //user.startRiding(shieldboard, true);
+        return true;
     }
 
     public static void shieldcast(World world, PlayerEntity user, Hand hand, Item item, ItemStack stack){

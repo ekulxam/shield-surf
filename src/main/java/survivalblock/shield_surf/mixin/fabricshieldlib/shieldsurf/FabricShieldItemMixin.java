@@ -21,8 +21,11 @@ public abstract class FabricShieldItemMixin extends Item {
         super(settings);
     }
 
-    @Inject(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setCurrentHand(Lnet/minecraft/util/Hand;)V"))
+    @Inject(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setCurrentHand(Lnet/minecraft/util/Hand;)V"), cancellable = true)
     private void rideTheLightning(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir, @Local ItemStack stack){
-        ShieldSurfUtil.rideTheLightning(world, user, this, stack);
+        if (ShieldSurfUtil.rideTheLightning(world, user, this, stack)) {
+            cir.setReturnValue(TypedActionResult.success(stack));
+            user.stopUsingItem();
+        }
     }
 }

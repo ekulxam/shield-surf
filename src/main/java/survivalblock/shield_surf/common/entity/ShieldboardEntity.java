@@ -68,7 +68,7 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
         this(ShieldSurfEntityTypes.SHIELDBOARD, world);
         setInputs();
         if (rider.isSprinting()) rider.setSprinting(false);
-        this.getShieldStackComponent().setShieldStack(stack.copyWithCount(stack.getCount()));
+        this.getShieldStackComponent().setShieldStack(stack.copy());
         this.setPos(rider.getX(), rider.getY(), rider.getZ());
         this.lastLocation = BoatEntity.Location.IN_AIR;
         this.location = BoatEntity.Location.IN_WATER;
@@ -192,9 +192,6 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
                 }
             }
         }
-        if (!this.getWorld().isClient() && this.getControllingPassenger() instanceof PlayerEntity player && this.age % 20 == 0) {
-            this.getShieldStackComponent().getShieldStack().damage(1, player, (p) -> p.sendToolBreakStatus(player.getActiveHand()));
-        }
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -228,6 +225,7 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
         this.setYaw(this.getYaw());
         this.prevYaw = this.getYaw();
     }
+
     private void tickMovement() {
         if (this.isLogicalSideForUpdatingMovement()) {
             this.updateVelocity();

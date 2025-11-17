@@ -55,11 +55,11 @@ dependencies {
     modApi "com.terraformersmc:modmenu:${mod_menu_version}"
     modRuntimeOnly "maven.modrinth:sodium:${sodium_version}"
 
-    modImplementation "com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"
-    modImplementation ("com.github.Chocohead:Fabric-ASM:v2.3") {
+    modCompileOnly "com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"
+    modCompileOnly ("com.github.Chocohead:Fabric-ASM:v2.3") {
         exclude (group: "net.fabricmc.fabric-api")
     }
-    modImplementation("maven.modrinth:midnightlib:${project.midnightlib_version}")
+    modCompileOnly("maven.modrinth:midnightlib:${project.midnightlib_version}")
 }
 
 processResources {
