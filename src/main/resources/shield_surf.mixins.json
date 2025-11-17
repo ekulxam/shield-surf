@@ -4,9 +4,6 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "survivalblock.shield_surf.common.compat.ShieldSurfMixinPlugin",
   "mixins": [
-    "bnuuyhelp.FleeEntityGoalAccessor",
-    "bnuuyhelp.RabbitEntityMixin",
-    "bnuuyhelp.TargetPredicateAccessor",
     "fabricshieldlib.expulsion.FabricBannerShieldItemMixin",
     "fabricshieldlib.expulsion.FabricShieldItemMixin",
     "fabricshieldlib.orbit.FabricBannerShieldItemMixin",
@@ -29,7 +26,6 @@
     "vanilla.vanillachanges.enchantableshields.ShieldItemMixin"
   ],
   "client": [
-    "bnuuyhelp.InventoryScreenMixin",
     "config.client.ShieldSurfConfigMixin",
     "vanilla.orbit.client.PlayerEntityRendererMixin",
     "vanilla.rapid.ClientPlayerEntityMixin",
