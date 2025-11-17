@@ -13,9 +13,11 @@ import survivalblock.shield_surf.common.entity.ProjectedShieldEntity;
 import survivalblock.shield_surf.common.entity.ShieldboardEntity;
 
 public class ShieldSurfEntityComponents implements EntityComponentInitializer {
+
     public static final ComponentKey<ShieldStackComponent> SHIELD_STACK = ComponentRegistry.getOrCreate(ShieldSurf.id("shield_stack"), ShieldStackComponent.class);
     public static final ComponentKey<ShieldboardSpeedComponent> SHIELDBOARD_SPEED = ComponentRegistry.getOrCreate(ShieldSurf.id("shieldboard_speed"), ShieldboardSpeedComponent.class);
     public static final ComponentKey<ShieldSatellitesComponent> SHIELD_SATELLITES = ComponentRegistry.getOrCreate(ShieldSurf.id("shield_satellites"), ShieldSatellitesComponent.class);
+
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         registry.registerFor(ShieldboardEntity.class, SHIELD_STACK, ShieldStackComponent::new);

@@ -12,7 +12,7 @@
 	"sources": "https://github.com/ekulxam/shield_surf",
 	"issues": "https://github.com/ekulxam/shield_surf/issues"
   },
-  "license": "MIT-0",
+  "license": "MIT",
   "icon": "assets/shield_surf/icon.png",
   "environment": "*",
   "entrypoints": {

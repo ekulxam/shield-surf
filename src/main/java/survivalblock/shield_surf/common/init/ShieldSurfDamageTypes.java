@@ -9,7 +9,6 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.World;
 import survivalblock.shield_surf.common.ShieldSurf;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ShieldSurfDamageTypes {
@@ -25,10 +24,10 @@ public class ShieldSurfDamageTypes {
      * @return an {@link ImmutableMap}
      */
     public static ImmutableMap<RegistryKey<DamageType>, DamageType> asDamageTypes() {
-        Map<RegistryKey<DamageType>, DamageType> damageTypes = new HashMap<>();
+        ImmutableMap.Builder<RegistryKey<DamageType>, DamageType> damageTypes = ImmutableMap.builder();
         damageTypes.put(SHIELDBOARD_COLLISION, new DamageType("shield_surf.shieldboard_collision", 0.1F));
         damageTypes.put(SHIELD_IMPACT, new DamageType("shield_surf.shield_impact", 0.1F));
-        return ImmutableMap.copyOf(damageTypes);
+        return damageTypes.build();
     }
 
     public static void bootstrap(Registerable<DamageType> damageTypeRegisterable) {

@@ -19,12 +19,11 @@ import survivalblock.shield_surf.mixin.vanilla.shieldsurf.client.ItemRendererAcc
 
 @Environment(value= EnvType.CLIENT)
 public class ShieldboardEntityRenderer extends EntityRenderer<ShieldboardEntity> {
-    public static final Identifier TEXTURE = new Identifier("textures/entity/shield_base_nopattern.png");
-    // private final ShieldEntityModel modelShield;
+
+    public static final Identifier TEXTURE = /*? >=1.21.1 {*/ /*Identifier.ofVanilla *//*?} else {*/ new Identifier /*?}*/("textures/entity/shield_base_nopattern.png");
 
     public ShieldboardEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
-        // this.modelShield = new ShieldEntityModel(context.getPart(EntityModelLayers.SHIELD));
     }
 
     @Override

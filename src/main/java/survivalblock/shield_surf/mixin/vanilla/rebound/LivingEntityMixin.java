@@ -66,7 +66,7 @@ public abstract class LivingEntityMixin extends Entity {
         if (this.activeShieldStack == null || this.activeShieldStack.isEmpty()) {
             return true;
         }
-        return !(source.getSource() instanceof ProjectileEntity) || EnchantmentHelper.getLevel(ShieldSurfEnchantments.REBOUND, this.activeShieldStack) <= 0;
+        return !(source.getSource() instanceof ProjectileEntity) || EnchantmentHelper.getLevel(/*? >=1.21 {*/ /*ShieldSurfEnchantments.get(ShieldSurfEnchantments.REBOUND, world) *//*?} else {*/ ShieldSurfEnchantments.REBOUND /*?}*/, this.activeShieldStack) <= 0;
     }
 
     @ModifyReturnValue(method = "damage", slice = @Slice(from = @At(value = "FIELD", target = "Lnet/minecraft/entity/LivingEntity;despawnCounter:I", opcode = Opcodes.PUTFIELD, ordinal = 0)), at = @At("RETURN"))
@@ -80,7 +80,7 @@ public abstract class LivingEntityMixin extends Entity {
         if (this.activeShieldStack == null || this.activeShieldStack.isEmpty()) {
             return false;
         }
-        if (source.getSource() instanceof ProjectileEntity projectileEntity && bl && EnchantmentHelper.getLevel(ShieldSurfEnchantments.REBOUND, this.activeShieldStack) > 0) {
+        if (source.getSource() instanceof ProjectileEntity projectileEntity && bl && EnchantmentHelper.getLevel(/*? >=1.21 {*/ /*ShieldSurfEnchantments.get(ShieldSurfEnchantments.REBOUND, serverWorld) *//*?} else {*/ ShieldSurfEnchantments.REBOUND /*?}*/, this.activeShieldStack) > 0) {
             Vec3d velocity = projectileEntity.getVelocity();
             Vec3d changedVelocity = new Vec3d(velocity.x, velocity.y, velocity.z);
             MinecraftServer server = serverWorld.getServer();

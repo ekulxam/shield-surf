@@ -21,8 +21,20 @@ public class BuiltinModelItemRendererMixin implements RenderHandleSometimesAcces
         this.shouldRenderShieldHandle = shouldRender;
     }
 
-    @WrapWithCondition(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V", ordinal = 0))
-    private boolean renderShieldHandleIfNotShieldboard(ModelPart instance, MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha){
+    @WrapWithCondition(method = "render", at = @At(value = "INVOKE", target =
+            //? if <1.21 {
+            "Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"
+            //?} else {
+            /*"Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;II)V"
+            *///?}
+            , ordinal = 0))
+    private boolean renderShieldHandleIfNotShieldboard(
+            //? if <1.21 {
+            ModelPart instance, MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha
+             //?} else {
+            /*ModelPart instance, MatrixStack matrices, VertexConsumer vertices, int light, int overlay
+            *///?}
+    ){
         return shouldRenderShieldHandle;
     }
 }

@@ -10,11 +10,11 @@ import java.util.concurrent.CompletableFuture;
 public class ShieldSurfEnUsLangGenerator extends FabricLanguageProvider {
 
     public ShieldSurfEnUsLangGenerator(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-        super(dataOutput, "en_us");
+        super(dataOutput /*? >=1.21.1 {*/ /*, registryLookup *//*?}*/);
     }
 
     @Override
-    public void generateTranslations(TranslationBuilder translationBuilder) {
+    public void generateTranslations( /*? >=1.21.1 {*/ /*RegistryWrapper.WrapperLookup wrapperLookup, *//*?}*/TranslationBuilder translationBuilder) {
         // entity
         translationBuilder.add(ShieldSurfEntityTypes.SHIELDBOARD, "Shieldboard");
         translationBuilder.add(ShieldSurfEntityTypes.PROJECTED_SHIELD, "Projected Shield");

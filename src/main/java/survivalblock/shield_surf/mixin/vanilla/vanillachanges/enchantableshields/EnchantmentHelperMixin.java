@@ -1,3 +1,4 @@
+//? if <1.21 {
 package survivalblock.shield_surf.mixin.vanilla.vanillachanges.enchantableshields;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -23,3 +24,4 @@ public class EnchantmentHelperMixin {
         return original.call(instance, item);
     }
 }
+//?}

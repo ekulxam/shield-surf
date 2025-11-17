@@ -20,6 +20,7 @@ public class ShieldSurf implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+        //? if <1.21
 		ShieldSurfEnchantments.init();
 		ShieldSurfEntityTypes.init();
 		ShieldSurfSoundEvents.init();
@@ -35,7 +36,7 @@ public class ShieldSurf implements ModInitializer {
 	}
 
 	public static Identifier id(String value) {
-		return new Identifier(MOD_ID, value);
+		return /*? >=1.21.1 {*/ /*Identifier.of *//*?} else {*/ new Identifier /*?}*/(MOD_ID, value);
 	}
 
 	@SuppressWarnings("UnusedReturnValue")

@@ -1,3 +1,6 @@
+import java.io.BufferedReader
+import java.io.FileReader
+
 plugins {
     id("fabric-loom") version "1.13-SNAPSHOT"
     id("maven-publish")
@@ -48,8 +51,9 @@ dependencies {
 
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("deps.fabric_api")}")
 
-    bundleAPI("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.property("deps.cca")}")
-    bundleAPI("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.property("deps.cca")}")
+    val ccaPackage = if(stonecutter.eval(stonecutter.current.version, ">=1.20.5"))  "org.ladysnake" else "dev.onyxstudios"
+    bundleAPI("${ccaPackage}.cardinal-components-api:cardinal-components-base:${project.property("deps.cca")}")
+    bundleAPI("${ccaPackage}.cardinal-components-api:cardinal-components-entity:${project.property("deps.cca")}")
 
     modApi("dev.isxander:yet-another-config-lib:${project.property("deps.yacl")}")
     modApi("com.terraformersmc:modmenu:${project.property("deps.modmenu")}")
@@ -59,6 +63,13 @@ dependencies {
     compat("com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.property("deps.fabric_shield_lib")}")
     compat("com.github.Chocohead:Fabric-ASM:v2.3")
     compat("maven.modrinth:midnightlib:${project.property("deps.midnightlib")}")
+}
+
+stonecutter {
+    replacements.string {
+        direction = eval(current.version, ">=1.20.5")
+        replace("dev.onyxstudios", "org.ladysnake")
+    }
 }
 
 fletchingTable {
@@ -84,6 +95,29 @@ tasks.processResources {
                 "minecraft" to minecraftVersion
             )
         )
+    }
+}
+
+tasks.named("build") {
+    finalizedBy("autoVersionChangelog")
+}
+
+tasks.register("autoVersionChangelog") {
+    doLast {
+        val changelog = File("changelog.md")
+        val reader = BufferedReader(FileReader(changelog))
+        val lines = reader.readLines().toMutableList()
+        val title = "Laseredstone ${project.property("mod_version")}"
+        lines[0] = title
+        changelog.bufferedWriter().use { writer ->
+            for (i in 0..<lines.size) {
+                writer.write(lines[i])
+                if (i != lines.size - 1) {
+                    writer.newLine()
+                }
+            }
+        }
+        println("Changelog header successfully replaced as $title")
     }
 }
 

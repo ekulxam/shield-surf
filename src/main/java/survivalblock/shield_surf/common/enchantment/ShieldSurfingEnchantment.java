@@ -1,3 +1,4 @@
+//? if <1.21 {
 package survivalblock.shield_surf.common.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
@@ -48,3 +49,4 @@ public class ShieldSurfingEnchantment extends Enchantment {
         return this.maxLevel;
     }
 }
+//?}

@@ -1,3 +1,4 @@
+//? if <1.21 {
 package survivalblock.shield_surf.common.enchantment;
 
 public class TreasureShieldEnchantment extends ShieldSurfingEnchantment {
@@ -27,3 +28,4 @@ public class TreasureShieldEnchantment extends ShieldSurfingEnchantment {
         return !TREASURE;
     }
 }
+//?}

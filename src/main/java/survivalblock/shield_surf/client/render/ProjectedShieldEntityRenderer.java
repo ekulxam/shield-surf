@@ -18,7 +18,8 @@ import survivalblock.shield_surf.mixin.vanilla.shieldsurf.client.ItemRendererAcc
 
 public class ProjectedShieldEntityRenderer extends EntityRenderer<ProjectedShieldEntity> {
 
-    public static final Identifier TEXTURE = new Identifier("textures/entity/shield_base_nopattern.png");
+    public static final Identifier TEXTURE = /*? >=1.21.1 {*/ /*Identifier.ofVanilla *//*?} else {*/ new Identifier /*?}*/("textures/entity/shield_base_nopattern.png");
+
     public ProjectedShieldEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
     }

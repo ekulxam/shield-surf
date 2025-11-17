@@ -6,6 +6,7 @@ import net.minecraft.sound.SoundEvent;
 import survivalblock.shield_surf.common.ShieldSurf;
 
 public class ShieldSurfSoundEvents {
+
     public static final SoundEvent ENTITY_PROJECTED_SHIELD_HIT = SoundEvent.of(ShieldSurf.id("entity.projected_shield.hit"));
 
     public static void init(){

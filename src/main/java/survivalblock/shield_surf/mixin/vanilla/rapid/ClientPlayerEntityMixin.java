@@ -31,6 +31,6 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
 
     @Unique
     private boolean doesNotImpedeMovement(boolean other){
-        return (!ShieldSurfUtil.isAShield(this.getActiveItem()) || EnchantmentHelper.getLevel(ShieldSurfEnchantments.RAPID, this.getActiveItem()) <= 0) && other;
+        return (!ShieldSurfUtil.isAShield(this.getActiveItem()) || EnchantmentHelper.getLevel(/*? >=1.21 {*/ /*ShieldSurfEnchantments.get(ShieldSurfEnchantments.RAPID, this.getWorld())*//*?} else {*/ ShieldSurfEnchantments.RAPID /*?}*/, this.getActiveItem()) <= 0) && other;
     }
 }

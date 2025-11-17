@@ -5,6 +5,7 @@ import net.minecraft.block.LilyPadBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.fluid.FluidState;
@@ -13,6 +14,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.*;
@@ -32,6 +34,10 @@ import survivalblock.shield_surf.common.init.ShieldSurfEntityTypes;
 import java.util.List;
 
 public class ShieldboardEntity extends Entity implements JumpingMount {
+
+    public static final double DEFAULT_JUMP_STRENGTH = 0.4;
+    public static final double MAX_SPEED = 0.36921875; // 19.20 blocks/sec at level 1 on grass blocks
+
     protected float ticksUnderwater;
     protected double waterLevel;
     protected BoatEntity.Location location;
@@ -48,20 +54,15 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
      */
     protected boolean jumping;
     protected float jumpingPower;
-    public static final double DEFAULT_JUMP_STRENGTH = 0.4;
     protected boolean inAirForJump;
-    public static final double MAX_SPEED = 0.36921875; // 19.20 blocks/sec at level 1 on grass blocks
+
+    /*? >=1.21.1 {*/ /*protected float stepHeight = 0.0F; *//*?}*/
 
     public ShieldboardEntity(EntityType<?> type, World world) {
         super(type, world);
         this.getShieldStackComponent().setShieldStack(Items.SHIELD.getDefaultStack());
         this.getShieldboardSpeedComponent().setCurrentBaseSpeed(0);
         this.setStepHeight(0.6f);
-    }
-
-    @Override
-    protected void initDataTracker() {
-
     }
 
     public ShieldboardEntity(World world, LivingEntity rider, ItemStack stack) {
@@ -74,6 +75,22 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
         this.location = BoatEntity.Location.IN_WATER;
         this.setYaw(rider.getYaw());
     }
+
+    @Override
+    protected void initDataTracker(/*? >=1.21.1 {*/ /*DataTracker.Builder builder *//*?}*/) {
+
+    }
+
+    //? if >=1.21.1 {
+    /*public void setStepHeight(float stepHeight) {
+        this.stepHeight = stepHeight;
+    }
+
+    @Override
+    public float getStepHeight() {
+        return this.stepHeight;
+    }
+    *///?}
 
     public void setInputs(){
         this.setInputs(false, false, false, false);
@@ -98,9 +115,11 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
     private ShieldStackComponent getShieldStackComponent(){
         return ShieldSurfEntityComponents.SHIELD_STACK.get(this);
     }
+
     private ShieldboardSpeedComponent getShieldboardSpeedComponent(){
         return ShieldSurfEntityComponents.SHIELDBOARD_SPEED.get(this);
     }
+
     @Override
     public boolean collidesWith(Entity other) {
         return false;
@@ -139,22 +158,27 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
         if (stack == null || stack.isEmpty()) {
             return false;
         }
-        return stack.getItem().isFireproof();
+        // I'm too lazy to version this import
+        return stack./*? >=1.20.5 {*/ /*contains(net.minecraft.component.DataComponentTypes.FIRE_RESISTANT) *//*?} else {*/getItem().isFireproof() /*?}*/;
     }
 
     @Override
     public void remove(RemovalReason reason) {
         LivingEntity controllingPassenger = this.getControllingPassenger();
         ShieldStackComponent shieldStackComponent = this.getShieldStackComponent();
+
         if (controllingPassenger instanceof PlayerEntity player) {
             player.getInventory().offerOrDrop(shieldStackComponent.getShieldStack());
         } else if (this.getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
             this.dropStack(shieldStackComponent.getShieldStack());
         }
+
         shieldStackComponent.setShieldStack(ItemStack.EMPTY);
+
         if (this.hasPassengers()) {
             this.removeAllPassengers();
         }
+
         super.remove(reason);
     }
 
@@ -174,12 +198,15 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
         this.lastLocation = this.location;
         this.location = this.checkLocation();
         this.ticksUnderwater = this.location == BoatEntity.Location.UNDER_WATER || this.location == BoatEntity.Location.UNDER_FLOWING_WATER ? this.ticksUnderwater + 1.0f : 0.0f;
+
         super.tick();
+
         LivingEntity living = this.getControllingPassenger();
         if (living == null) {
             return;
         }
-        this.tickRotation(getControlledRotation(living));
+
+        this.tickRotation(this.getControlledRotation(living));
         this.tickMovement();
         this.checkBlockCollision();
         if (!this.getWorld().isClient()) {
@@ -273,11 +300,15 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
 
     @Override
     protected void readCustomDataFromNbt(NbtCompound nbt) {
-
+        //? if >=1.21.9 {
+        /*if (nbt.contains("stepHeight")) {
+            this.setStepHeight(nbt.getFloat("stepHeight"));
+        }
+        *///?}
     }
     @Override
     protected void writeCustomDataToNbt(NbtCompound nbt) {
-
+        /*? >=1.21.1 {*/ /*nbt.putFloat("stepHeight", this.stepHeight); *//*?}*/
     }
 
     @Override
@@ -285,10 +316,13 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
         return super.isCollidable();
     }
 
+    //? if <1.21 {
     @Override
     public double getMountedHeightOffset() {
         return super.getMountedHeightOffset() + 0.259;
     }
+    //?}
+
 
     @Override
     protected boolean canAddPassenger(Entity passenger) {
@@ -312,7 +346,7 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
         this.velocityDirty = true;
         double speed;
         double maxSpeed = shieldboardSpeedComponent.getMaxBaseSpeed();
-        @SuppressWarnings("SpellCheckingInspection") final double celeration = 0.004; // lol
+        final double celeration = 0.004; // lol
         if (this.shouldAccelerateForward || this.shouldGoBackward || this.shouldTurnRight || this.shouldTurnLeft) {
             speed = MathHelper.clamp(currentBaseSpeed + (celeration * (this.location == BoatEntity.Location.IN_AIR && this.lastLocation == BoatEntity.Location.IN_AIR ? 1.5 : 1)), -maxSpeed, maxSpeed); // speed of board (in blocks/sec) in air is equivalent to speed * 20
         } else {
@@ -374,13 +408,6 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
             return this.lastLocation == BoatEntity.Location.ON_LAND || this.lastLocation == BoatEntity.Location.IN_AIR;
         }
         return true;
-    }
-
-    @Override
-    public void updateTrackedPositionAndAngles(double x, double y, double z, float yaw, float pitch, int interpolationSteps, boolean interpolate) {
-        this.setPosition(x, y, z);
-        this.setYaw(yaw);
-        this.setPitch(pitch);
     }
 
     private BoatEntity.Location checkLocation() {
@@ -617,7 +644,7 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
     }
 
     public int getEnchantmentLevel(int max) {
-        int level = EnchantmentHelper.getLevel(ShieldSurfEnchantments.SHIELD_SURF, this.asItemStack());
+        int level = EnchantmentHelper.getLevel(/*? >=1.21 {*/ /*ShieldSurfEnchantments.get(ShieldSurfEnchantments.SHIELD_SURF, this.getWorld())*//*?} else {*/ ShieldSurfEnchantments.SHIELD_SURF /*?}*/, this.asItemStack());
         if (level < 0) {
             return 0;
         }

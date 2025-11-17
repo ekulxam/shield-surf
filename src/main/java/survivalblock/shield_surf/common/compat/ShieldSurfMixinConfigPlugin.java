@@ -1,5 +1,6 @@
 package survivalblock.shield_surf.common.compat;
 
+import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -28,6 +29,9 @@ public class ShieldSurfMixinConfigPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (targetClassName.contains(FABRIC_SHIELD_LIB_ID)) {
+            if (mixinClassName.contains("devfix")) {
+                return ShieldSurf.hasFabricShieldLib && FabricLoader.getInstance().isDevelopmentEnvironment();
+            }
             return ShieldSurf.hasFabricShieldLib;
         }
         if (targetClassName.contains("config") && mixinClassName.contains("config")) {
