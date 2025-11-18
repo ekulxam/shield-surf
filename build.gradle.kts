@@ -1,5 +1,6 @@
 import java.io.BufferedReader
 import java.io.FileReader
+import org.gradle.jvm.tasks.Jar
 
 plugins {
     id("fabric-loom") version "1.13-SNAPSHOT"
@@ -107,7 +108,7 @@ tasks.register("autoVersionChangelog") {
         val changelog = File("changelog.md")
         val reader = BufferedReader(FileReader(changelog))
         val lines = reader.readLines().toMutableList()
-        val title = "Laseredstone ${project.property("mod_version")}"
+        val title = "Shield Surf ${project.property("mod_version")}"
         lines[0] = title
         changelog.bufferedWriter().use { writer ->
             for (i in 0..<lines.size) {
@@ -157,4 +158,15 @@ tasks.jar {
     from("LICENSE") {
         rename { "${it}_${base.archivesName}"}
     }
+}
+
+modrinth {
+    token = providers.environmentVariable("MODRINTH_TOKEN")
+    projectId = project.base.archivesName
+    version = project.version
+    uploadFile.set(tasks.named<Jar>("remapJar").get().archiveFile)
+    gameVersions.addAll("${project.property("deps.compatibleVersions")}".split(", ").toList())
+    loaders.addAll("${project.property("deps.compatibleLoaders")}".split(", ").toList())
+    changelog = providers.environmentVariable("CHANGELOG")
+    syncBodyFrom = "<!--DO NOT EDIT MANUALLY: synced from gh readme-->\n" + rootProject.file("README.md").readText()
 }
