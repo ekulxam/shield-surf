@@ -167,6 +167,6 @@ modrinth {
     uploadFile.set(tasks.named<Jar>("remapJar").get().archiveFile)
     gameVersions.addAll("${project.property("deps.compatibleVersions")}".split(", ").toList())
     loaders.addAll("${project.property("deps.compatibleLoaders")}".split(", ").toList())
-    changelog = providers.environmentVariable("CHANGELOG")
+    changelog = rootProject.file("changelog.md").readText()
     syncBodyFrom = "<!--DO NOT EDIT MANUALLY: synced from gh readme-->\n" + rootProject.file("README.md").readText()
 }
