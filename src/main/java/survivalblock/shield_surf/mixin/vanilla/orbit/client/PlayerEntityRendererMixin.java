@@ -50,7 +50,15 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         int overlay = OverlayTexture.DEFAULT_UV;
         for (float i = 0; i < 360; i += 360 / (float) satellites) {
             matrixStack.push();
-            matrixStack.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(i + (satellitesComponent.getRotation() * (ShieldSurfConfig.orbitingShieldsRotateClockwise() ? 1 : -1)) + (ShieldSurfConfig.projectedShieldsRenderOutwards() ? 0 : 180)));
+            matrixStack.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(
+                    i + (
+                            satellitesComponent.getRotation() * (
+                                    ShieldSurfConfig.orbitingShieldsRotateClockwise() ? 1 : -1
+                            )
+                    ) + (
+                            ShieldSurfConfig.projectedShieldsRenderOutwards() ? 0 : 180
+                    ) + tickDelta
+            ));
             matrixStack.translate(0.0f, 1.1f, 1.6f);
             if (player.getHeight() <= 1) {
                 if (ShieldSurfConfig.orbitingShieldsFlattenWhileSwimming()) {

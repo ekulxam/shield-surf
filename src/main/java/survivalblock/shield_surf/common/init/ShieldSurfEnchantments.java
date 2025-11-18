@@ -8,6 +8,7 @@ import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 //? if <1.21
 import net.minecraft.item.Item;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -47,9 +48,6 @@ public class ShieldSurfEnchantments {
         Registry.register(Registries.ENCHANTMENT, ShieldSurf.id("rebound"), REBOUND);
     }
 
-    public static Enchantment wrapForGetLevel(Enchantment enchantment) {
-        return enchantment;
-    }
     //?} else {
     /*public static final RegistryKey<Enchantment> SHIELD_SURF = of("shield_surf");
     public static final RegistryKey<Enchantment> AEGIS = of("aegis");
