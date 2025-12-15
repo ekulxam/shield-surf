@@ -54,6 +54,7 @@ public class ShieldSurfUtil {
         }
         return ItemStack.EMPTY;
     }
+
     public static boolean hasAegis(LivingEntity living){
         return getFirstAegisStack(living, false) != ItemStack.EMPTY;
     }
