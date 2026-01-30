@@ -300,12 +300,13 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
 
     @Override
     protected void readCustomDataFromNbt(NbtCompound nbt) {
-        //? if >=1.21.9 {
+        //? if >=1.21.1 {
         /*if (nbt.contains("stepHeight")) {
             this.setStepHeight(nbt.getFloat("stepHeight"));
         }
         *///?}
     }
+
     @Override
     protected void writeCustomDataToNbt(NbtCompound nbt) {
         /*? >=1.21.1 {*/ /*nbt.putFloat("stepHeight", this.stepHeight); *//*?}*/
@@ -322,7 +323,6 @@ public class ShieldboardEntity extends Entity implements JumpingMount {
         return super.getMountedHeightOffset() + 0.259;
     }
     //?}
-
 
     @Override
     protected boolean canAddPassenger(Entity passenger) {
