@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import survivalblock.shield_surf.common.ShieldSurf;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -44,9 +45,30 @@ public class ShieldSurfMixinConfigPlugin implements IMixinConfigPlugin {
     public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
     }
 
+    /**
+     * Returns all enabled mixins for this version
+     */
     @Override
     public List<String> getMixins() {
-        return null;
+        return Arrays.asList(
+            "fabricshieldlib.expulsion.FabricShieldItemMixin",
+            "fabricshieldlib.orbit.FabricShieldItemMixin",
+            "fabricshieldlib.shieldsurf.FabricShieldItemMixin",
+            "vanilla.aegis.LivingEntityMixin",
+            "vanilla.aegis.PlayerEntityMixin",
+            "vanilla.clockwork.LivingEntityMixin",
+            "vanilla.expulsion.LivingEntityMixin",
+            "vanilla.expulsion.ShieldItemMixin",
+            "vanilla.orbit.PlayerEntityMixin",
+            "vanilla.orbit.ShieldItemMixin",
+            "vanilla.rebound.LivingEntityMixin",
+            "vanilla.rebound.MinecraftServerAccessor",
+            "vanilla.rebound.TridentEntityAccessor",
+            "vanilla.shieldsurf.ServerPlayNetworkHandlerMixin",
+            "vanilla.shieldsurf.ShieldItemMixin",
+            "vanilla.vanillachanges.enchantableshields.ItemMixin",
+            "vanilla.vanillachanges.enchantableshields.ShieldItemMixin"
+        );
     }
 
     @Override

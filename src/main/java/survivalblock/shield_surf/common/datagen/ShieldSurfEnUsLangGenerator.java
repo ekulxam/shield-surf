@@ -41,6 +41,8 @@ public class ShieldSurfEnUsLangGenerator extends FabricLanguageProvider {
         translationBuilder.add("enchantment.shield_surf.orbit.desc", "Using the shield will summon a shield satellite that will orbit around the player. The shield satellite will block any entity-based damage only once before breaking.");
         translationBuilder.add("enchantment.shield_surf.rebound", "Rebound");
         translationBuilder.add("enchantment.shield_surf.rebound.desc", "Blocked Projectiles will reverse direction greatly upon hitting the shield.");
+        translationBuilder.add("enchantment.shield_surf.clockwork", "Clockwork");
+        translationBuilder.add("enchantment.shield_surf.clockwork.desc", "Shields block instantly without delay, but only for 5 ticks, followed by a 15 tick cooldown.");
 
         // sounds
         translationBuilder.add("subtitles.shield_surf.entity.projected_shield.hit", "Projected Shield hits");

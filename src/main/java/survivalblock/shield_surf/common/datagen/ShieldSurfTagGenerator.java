@@ -50,7 +50,8 @@ public class ShieldSurfTagGenerator {
                             ShieldSurfEnchantments.AEGIS,
                             ShieldSurfEnchantments.EXPULSION,
                             ShieldSurfEnchantments.ORBIT,
-                            ShieldSurfEnchantments.REBOUND
+                            ShieldSurfEnchantments.REBOUND,
+                            ShieldSurfEnchantments.CLOCKWORK
                     );
 
             getOrCreateTagBuilder(EnchantmentTags.NON_TREASURE)
@@ -66,7 +67,8 @@ public class ShieldSurfTagGenerator {
                             ShieldSurfEnchantments.RAPID,
                             ShieldSurfEnchantments.EXPULSION,
                             ShieldSurfEnchantments.ORBIT,
-                            ShieldSurfEnchantments.REBOUND
+                            ShieldSurfEnchantments.REBOUND,
+                            ShieldSurfEnchantments.CLOCKWORK
                     );
         }
     }

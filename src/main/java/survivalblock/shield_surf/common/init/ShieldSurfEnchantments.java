@@ -39,6 +39,8 @@ public class ShieldSurfEnchantments {
 
     public static final Enchantment REBOUND = new TreasureShieldEnchantment(Enchantment.Rarity.VERY_RARE);
 
+    public static final Enchantment CLOCKWORK = new ClockworkEnchantment();
+
     public static void init() {
         Registry.register(Registries.ENCHANTMENT, ShieldSurf.id("shield_surf"), SHIELD_SURF);
         Registry.register(Registries.ENCHANTMENT, ShieldSurf.id("aegis"), AEGIS);
@@ -46,6 +48,7 @@ public class ShieldSurfEnchantments {
         Registry.register(Registries.ENCHANTMENT, ShieldSurf.id("expulsion"), EXPULSION);
         Registry.register(Registries.ENCHANTMENT, ShieldSurf.id("orbit"), ORBIT);
         Registry.register(Registries.ENCHANTMENT, ShieldSurf.id("rebound"), REBOUND);
+        Registry.register(Registries.ENCHANTMENT, ShieldSurf.id("clockwork"), CLOCKWORK);
     }
 
     //?} else {
@@ -55,6 +58,7 @@ public class ShieldSurfEnchantments {
     public static final RegistryKey<Enchantment> EXPULSION = of("expulsion");
     public static final RegistryKey<Enchantment> ORBIT = of("orbit");
     public static final RegistryKey<Enchantment> REBOUND = of("rebound");
+    public static final RegistryKey<Enchantment> CLOCKWORK = of("clockwork");
 
     private static RegistryKey<Enchantment> of(String value) {
         return RegistryKey.of(RegistryKeys.ENCHANTMENT, ShieldSurf.id(value));
@@ -79,6 +83,7 @@ public class ShieldSurfEnchantments {
         addToBuilder(enchantments, EXPULSION, 6, Rarity.RARE, shields, exclusiveSet);
         addToBuilder(enchantments, ORBIT, 1, Rarity.RARE, shields, exclusiveSet);
         addToBuilder(enchantments, REBOUND, 1, Rarity.RARE, shields, exclusiveSet);
+        addToBuilder(enchantments, CLOCKWORK, 1, Rarity.RARE, shields, exclusiveSet);
         return enchantments.build();
     }
 

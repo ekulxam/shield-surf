@@ -9,6 +9,7 @@
     "fabricshieldlib.shieldsurf.FabricShieldItemMixin",
     "vanilla.aegis.LivingEntityMixin",
     "vanilla.aegis.PlayerEntityMixin",
+    "vanilla.clockwork.LivingEntityMixin",
     "vanilla.expulsion.LivingEntityMixin",
     "vanilla.expulsion.ShieldItemMixin",
     "vanilla.orbit.PlayerEntityMixin",
